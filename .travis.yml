@@ -23,7 +23,7 @@ env:
   global:
   - REPO="github.com/imet/imet.github.io.git"
   - USER="imet"
-  - EMAIL="liudongshan@gmail.com"
+  - EMAIL=${email}
   - SOURCE_DIR="public"
   - DEPLOY_BRANCH="master"
   - GH_TOKEN=${GH_TOKEN}
