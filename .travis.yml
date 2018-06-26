@@ -1,29 +1,21 @@
-language: node_js
-node_js:
-- node
-sudo: required
-dist: trusty
-
-branches:
-  only:
-  - blog
-before_install:
-# for html-minifier
-- sudo pip install Pygments
-install:
-- mkdir work
-- wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.deb
-  -O $PWD/work/hugo.deb
-- sudo dpkg -i $PWD/work/hugo.deb
-- npm install
+sudo: false
+language: go
+git:
+  depth: 1
+install: go get -v github.com/gohugoio/hugo
 script:
-- grunt deploy
-
-env:
-  global:
-  - REPO="github.com/imet/imet.github.io.git"
-  - USER="imet"
-  - EMAIL=${email}
-  - SOURCE_DIR="public"
-  - DEPLOY_BRANCH="master"
-  - GH_TOKEN=${GH_TOKEN}
+  - hugo
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: ${GH_TOKEN}
+  on:
+    branch: master
+  local_dir: public
+  repo: imet/imet.github.io
+  target_branch: master
+  email: ${email}
+  name: imet
+notifications:
+  email:
+    on_success: never
