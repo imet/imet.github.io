@@ -3,11 +3,14 @@ title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
 draft: true
-keywords: []
+keywords:
+-
 description: ""
-tags: []
-categories: []
-author: ""
+tags:
+-
+categories:
+-
+author: "imet"
 
 # You can also close(false) or open(true) something for this content.
 # P.S. comment can only be closed
@@ -34,7 +37,7 @@ flowchartDiagrams:
   enable: false
   options: ""
 
-sequenceDiagrams: 
+sequenceDiagrams:
   enable: false
   options: ""
 
