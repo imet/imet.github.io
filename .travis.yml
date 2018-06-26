@@ -13,9 +13,7 @@ deploy:
   skip_cleanup: true
   github_token: ${GH_TOKEN}
   on:
-    branches:
-      only:
-      - blog
+    branch: blog
   local_dir: public
   repo: imet/imet.github.io
   target_branch: master
