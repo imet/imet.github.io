@@ -1,8 +1,13 @@
-sudo: false
+sudo: required
+dist: trusty
 language: go
-git:
-  depth: 1
-install: go get -v github.com/gohugoio/hugo
+branches:
+  only:
+  - blog
+install:
+- mkdir work
+- wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.deb -O $PWD/work/hugo.deb
+- sudo dpkg -i $PWD/work/hugo.deb
 script:
   - hugo
 deploy:
