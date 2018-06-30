@@ -3,10 +3,13 @@ title: "{{ replace .TranslationBaseName "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
 draft: true
-keywords: []
+keywords:
+-
 description: ""
-tags: []
-categories: []
+tags:
+-
+categories:
+-
 author: ""
 
 # You can also close(false) or open(true) something for this content.
