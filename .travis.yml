@@ -19,6 +19,7 @@ deploy:
   target_branch: master
   email: ${email}
   name: imet
+  fqdn: www.imet.me
 notifications:
   email:
     on_success: never
