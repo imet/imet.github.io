@@ -2,7 +2,7 @@
 title: "sdkman: groovy, scala, kotlin 等包管理软件"
 date: 2018-07-01T18:44:43+08:00
 lastmod: 2018-07-01T18:44:43+08:00
-draft: true
+draft: false
 keywords:
 - SDKMAN
 - groovy
