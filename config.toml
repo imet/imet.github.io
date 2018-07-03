@@ -1,4 +1,4 @@
-baseURL = "https://imet.github.io/"
+baseURL = "http://imet.me/"
 languageCode = "zh"
 defaultContentLanguage = "zh-cn"  # Default language to use (if you setup multilingual support)
 
