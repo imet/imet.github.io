@@ -30,11 +30,11 @@ author: "imet"
 
 ### slf4j binding 一张图
 
-![slf4j binding]( http://pb56ttwyu.bkt.clouddn.com/blog/img/slf4j_impl_20180718141814.png)
+![slf4j binding]( http://p0.img.imet.top/op/slf4j_impl_20180718141814.png)
 
 ### slf4j 使用 log4j1.2 作为实现，然后将其他日志转到 slf4j
 
-![slf4j_with_redirection]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180718141933_slf4j_with_redirection.png)
+![slf4j_with_redirection]( http://p0.img.imet.top/op/20180718141933_slf4j_with_redirection.png)
 
 
 ### 给出用 log4j2 一个日志相关的 maven 配置

@@ -39,7 +39,7 @@ log4j2 日志性能在某些场景下要优于 logback 等其他日志组件，�
 
 - [lock-free data structure][9]
 
-![Logging Library Performance Comparison]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180718145851_log_lib_compare.png)
+![Logging Library Performance Comparison]( http://p0.img.imet.top/op/20180718145851_log_lib_compare.png)
 
 (refer: [log4j2 performance][7])
 
@@ -50,7 +50,7 @@ log4j2 日志性能在某些场景下要优于 logback 等其他日志组件，�
 如果日志 pattern 中打印以下信息的话:  %C or $class, %F or %file, %l or %location, %L or %line, %M or %method
 将会极大的影响日志的性能，日志组件需要打印当前栈的快照，遍历 stack trace 然后找到 location 等相关信息
 
-![Asynchronous Logging with Caller Location Information]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180718151032_performance_impact_of_catpuring_caller_location.png)
+![Asynchronous Logging with Caller Location Information]( http://p0.img.imet.top/op/20180718151032_performance_impact_of_catpuring_caller_location.png)
 
 (refer: [log4j2 performance][7])
 
@@ -58,7 +58,7 @@ log4j2 日志性能在某些场景下要优于 logback 等其他日志组件，�
 
 大部分情况下 garbage free 的性能要优
 
-![sync log compare]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180718173203_sync_logging_compare.png)
+![sync log compare]( http://p0.img.imet.top/op/20180718173203_sync_logging_compare.png)
 
 (refer: [log4j2 performance][7], [garbagefree][8])
 

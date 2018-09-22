@@ -30,7 +30,7 @@ author: "imet"
 - user space: 应用程序和C库运行在用户空间
 - kernal space: 而核心内核和设备驱动程序，以及硬件则常驻内核空间
 
-![linux_kernel_space]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180919234210_linux_kernel_space.png)
+![linux_kernel_space]( http://p0.img.imet.top/op/20180919234210_linux_kernel_space.png)
 
 ### 虚拟地址空间 vs 物理内存
 
@@ -41,12 +41,12 @@ author: "imet"
 
 现代的 CPU 基本上都是 64 位，所以最大寻址空间远超目前的物理内存 4GiB, 8GiB, 64GiB 等
 
-![linux_virtual_address_space]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180920002244_virtual_address_space.png)
+![linux_virtual_address_space]( http://p0.img.imet.top/op/20180920002244_virtual_address_space.png)
 
 1. 关于 TASK_SIZE:  IA32 位架构， TASK_SIZE 为 3GiB, 所以内核空间为 1GiB
 2. 64位架构，实际上用不了这么多， 可能会造成一定的空洞，参考 arm 64 的架构
 
-![arm64_kernel_space]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180920004223_arm64_kernel_space.png)
+![arm64_kernel_space]( http://p0.img.imet.top/op/20180920004223_arm64_kernel_space.png)
 
 所以虚拟地址空间和物理内存空间是独立的
 
@@ -58,7 +58,7 @@ author: "imet"
 3. 然后 CPU 切换到内核空间执行系统 write() 调用
 4. 当 CPU 执行完系统调用后，又切换到用户空间
 
-![kernal_space_user_space_switch]( http://pb56ttwyu.bkt.clouddn.com/blog/img/20180920004602_kernel_space_user_space_switch.png)
+![kernal_space_user_space_switch]( http://p0.img.imet.top/op/20180920004602_kernel_space_user_space_switch.png)
 
 
 

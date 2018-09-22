@@ -76,7 +76,7 @@ Hardware:
 ### 2. L1，L2，L3 的结构
 
 顺便看一下 L1, L2, L3 的结构:
-![cpu_cache](http://pb56ttwyu.bkt.clouddn.com/blog/img/20180630232448_cpu_cache.png)
+![cpu_cache](http://p0.img.imet.top/op/20180630232448_cpu_cache.png)
 
 可以参考[链接][10]，了解缓存寻址时间
 
