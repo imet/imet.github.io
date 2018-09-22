@@ -30,7 +30,7 @@ author: "imet"
 
 ### slf4j binding 一张图
 
-![slf4j binding]( http://p0.img.imet.top/op/slf4j_impl_20180718141814.png)
+![slf4j binding]( http://p0.img.imet.top/op/20180718141814_slf4j_impl.png)
 
 ### slf4j 使用 log4j1.2 作为实现，然后将其他日志转到 slf4j
 
