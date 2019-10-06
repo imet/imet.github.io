@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>java日志框架 - imet blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="imet" /><meta name="description" content="java 日志框架" />
+<meta name="keywords" content="log4j, log4j2, slf4j" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<link rel="canonical" href="http://imet.me/post/2018/07-17_java_log_framework/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+
+
+<meta property="og:title" content="java日志框架" />
+<meta property="og:description" content="java 日志框架" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://imet.me/post/2018/07-17_java_log_framework/" />
+
+
+
+<meta property="article:published_time" content="2018-07-17T16:47:00&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-07-17T16:47:00&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="java日志框架">
+<meta itemprop="description" content="java 日志框架">
+
+
+<meta itemprop="datePublished" content="2018-07-17T16:47:00&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-17T16:47:00&#43;08:00" />
+<meta itemprop="wordCount" content="1253">
+
+
+
+<meta itemprop="keywords" content="log4j,slf4j,log4j2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="java日志框架"/>
+<meta name="twitter:description" content="java 日志框架"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">imet blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">imet blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">java日志框架</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-17 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java%E6%A1%86%E6%9E%B6/"> java框架 </a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#简单的总结">简单的总结</a>
+<ul>
+<li><a href="#slf4j-binding-一张图">slf4j binding 一张图</a></li>
+<li><a href="#slf4j-使用-log4j1-2-作为实现-然后将其他日志转到-slf4j">slf4j 使用 log4j1.2 作为实现，然后将其他日志转到 slf4j</a></li>
+<li><a href="#给出用-log4j2-一个日志相关的-maven-配置">给出用 log4j2 一个日志相关的 maven 配置</a></li>
+</ul></li>
+<li><a href="#slf4j提供的适配库和桥接库">slf4j提供的适配库和桥接库</a>
+<ul>
+<li><a href="#适配库">适配库：</a></li>
+<li><a href="#桥接库">桥接库：</a></li>
+</ul></li>
+<li><a href="#log4j2-提供的适配库">log4j2 提供的适配库</a>
+<ul>
+<li><a href="#桥接库及绑定库">桥接库及绑定库</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>日志组件这么多，log4j, log4j2, slf4j 等傻傻分不清楚，如何选择相关的日志组件 ？</p>
+
+<p></p>
+
+<h2 id="简单的总结">简单的总结</h2>
+
+<ul>
+<li>现在主流的都推荐使用 slf4j 作为日志门面</li>
+<li>在一个应用程序里面，slf4j 有且只能有一个 implementation</li>
+<li>log4j2 性能更高: 有更优秀的锁机制，LMAX Disruptor 队列，&rdquo;无垃圾&rdquo;机制</li>
+<li>有了 slf4j, log4j2 后，需要把其他的日志组件给排除掉，然后将其他的日志重定向到 slf4j, 或者 log4j2</li>
+</ul>
+
+<h3 id="slf4j-binding-一张图">slf4j binding 一张图</h3>
+
+<p><img src="http://p0.img.imet.top/op/20180718141814_slf4j_impl.png" alt="slf4j binding" /></p>
+
+<h3 id="slf4j-使用-log4j1-2-作为实现-然后将其他日志转到-slf4j">slf4j 使用 log4j1.2 作为实现，然后将其他日志转到 slf4j</h3>
+
+<p><img src="http://p0.img.imet.top/op/20180718141933_slf4j_with_redirection.png" alt="slf4j_with_redirection" /></p>
+
+<h3 id="给出用-log4j2-一个日志相关的-maven-配置">给出用 log4j2 一个日志相关的 maven 配置</h3>
+
+<pre><code class="language-xml">  &lt;dependencies&gt;
+    &lt;!-- 日志门面 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 作为 slf4j 的实现 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-slf4j-impl&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 核心 jar --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-api&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 核心 jar --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-core&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- 将老版本的 log4j 1.2 升级到 log4j2  --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-1.2-api&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!--&amp;lt;!&amp;ndash; log4j2 jul 的实现  &amp;ndash;&amp;gt;--&gt;
+    &lt;!--&lt;dependency&gt;--&gt;
+        &lt;!--&lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;--&gt;
+        &lt;!--&lt;artifactId&gt;log4j-jul&lt;/artifactId&gt;--&gt;
+        &lt;!--&lt;version&gt;2.10.0&lt;/version&gt;--&gt;
+    &lt;!--&lt;/dependency&gt;--&gt;
+
+    &lt;!-- 使用log4j2的AsyncLogger需要包含disruptor --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.lmax&lt;/groupId&gt;
+        &lt;artifactId&gt;disruptor&lt;/artifactId&gt;
+        &lt;version&gt;3.3.7&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- 需要再把其他依赖里面的 slf4j implement 给排除掉，已经依赖的实现日志包 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;xxx&lt;/groupId&gt;
+      &lt;artifactId&gt;xxx-yy&lt;/artifactId&gt;
+      &lt;version&gt;zz&lt;/version&gt;
+      &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;/exclusion&gt;
+      &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+
+  &lt;/dependencies&gt;
+</code></pre>
+
+<h2 id="slf4j提供的适配库和桥接库">slf4j提供的适配库和桥接库</h2>
+
+<h3 id="适配库">适配库：</h3>
+
+<ul>
+<li>slf4j-log4j12：使用log4j-1.2作为日志输出服务</li>
+<li>slf4j-jdk14：使用java.util.logging作为日志输出服务</li>
+<li>slf4j-jcl：使用JCL作为日志输出服务</li>
+<li>slf4j-simple：日志输出至System.err</li>
+<li>slf4j-nop：不输出日志</li>
+<li>log4j-slf4j-impl：使用log4j2作为日志输出服务</li>
+<li>logback: logback天然与slf4j适配，不需要额外引入适配库（毕竟是一个作者写的）</li>
+</ul>
+
+<h3 id="桥接库">桥接库：</h3>
+
+<ul>
+<li>log4j-over-slf4j：将使用log4j api输出的日志桥接至slf4j</li>
+<li>jcl-over-slf4j：将使用JCL api输出的日志桥接至slf4j</li>
+<li>jul-to-slf4j：将使用java.util.logging输出的日志桥接至slf4j</li>
+<li>log4j-to-slf4j：将使用log4j2输出的日志桥接至slf4j</li>
+</ul>
+
+<blockquote>
+<p>题外话：slf4j唯独没有提供log4j2的适配库和桥接库，log4j-slf4j-impl和log4j-to-slf4j都是Apache Logging自己开发的，看样子Ceki和Apache Logging的梁子真的很深啊……倒是Apache没有端架子，可能也是因为slf4j太火了吧</p>
+</blockquote>
+
+<h2 id="log4j2-提供的适配库">log4j2 提供的适配库</h2>
+
+<h3 id="桥接库及绑定库">桥接库及绑定库</h3>
+
+<ul>
+<li><p><strong>log4j-jcl</strong>: 将使用 jcl api 输出的日志桥接到 log4j2</p>
+
+<ul>
+<li>summary: The Commons Logging Bridge allows applications coded to the Commons Logging API to use Log4j 2 as the implementation.</li>
+</ul></li>
+
+<li><p><strong>log4j-1.2-api</strong>: 将 log4j 1.2 api 输出的日志桥接到 log4j2</p>
+
+<ul>
+<li>desc: The Log4j 1.2 Bridge allows applications coded to use Log4j 1.2 API to use Log4j 2 instead</li>
+</ul></li>
+
+<li><p><strong>log4j-jul</strong>: 将 jdk jul 日志使用 log4j2 来输出</p>
+
+<ul>
+<li>summary: The JDK Logging Adapter is a custom implementation of java.util.logging.LogManager that uses Log4j. This adapter can be used with either the Log4j API or Log4j Core</li>
+</ul></li>
+
+<li><p><strong>log4j-slf4j-impl</strong>：使用 log4j2 作为日志输出服务</p>
+
+<ul>
+<li>summary: The Log4j 2 SLF4J Binding allows applications coded to the SLF4J API to use Log4j 2 as the implementation.</li>
+</ul></li>
+
+<li><p><strong>log4j-to-slf4j</strong>: 将 log4j2 日志输出的日志桥接到 slf4j</p></li>
+</ul>
+
+<blockquote>
+<p>log4j-slf4j-impl 不要和 log4j-to-slf4j 同时使用，不然后果很严重</p>
+</blockquote>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li>csdn blog: <a href="https://blog.csdn.net/yycdaizi/article/details/8276265" title="java日志组件介绍（common-logging，log4j，slf4j，logback ）">java日志组件介绍（common-logging，log4j，slf4j，logback ）</a></li>
+<li>简书: <a href="https://www.jianshu.com/p/85d141365d39" title="该让log4j退休了 - 论Java日志组件的选择 - on 简书">该让log4j退休了 - 论Java日志组件的选择</a></li>
+<li>网易lede: <a href="http://tech.lede.com/2017/02/06/rd/server/log4jSearch/" title="日志工具现状调研">日志工具现状调研</a></li>
+<li>网易lede: <a href="http://tech.lede.com/2017/08/28/rd/server/Log4j2Update/" title="Log4j 2.x 日志升级的详细流程（针对各种混合使用Log4j 1.x，Logback，JCL,JUL等）">Log4j 2.x 日志升级的详细流程（针对各种混合使用Log4j 1.x，Logback，JCL,JUL等）</a></li>
+<li>log4j2 runtime-dependencies <a href="http://logging.apache.org/log4j/2.x/runtime-dependencies.html" title="log4j2 相关 jar 及依赖关系">log4j2 相关 jar 及依赖关系</a></li>
+</ol>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">imet</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-07-17</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/log4j/">log4j</a>
+          
+          <a href="/tags/slf4j/">slf4j</a>
+          
+          <a href="/tags/log4j2/">log4j2</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/07-18_log4j2_high_performance/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">log4j2 高性能</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/07-03_zuul_1.x_source/">
+            <span class="next-text nav-default">zuul 1.x 源码阅读之 ZuulServlet 及 Filter 加载</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/imet" class="iconfont icon-github" title="github"></a>
+  <a href="http://imet.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">imet</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

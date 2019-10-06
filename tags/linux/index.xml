@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on imet blog</title>
+    <link>http://imet.me/tags/linux/</link>
+    <description>Recent content in Linux on imet blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 19 Sep 2018 23:13:46 +0800</lastBuildDate>
+    
+	<atom:link href="http://imet.me/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>linux 内核基础</title>
+      <link>http://imet.me/post/2018/09-19_linux_kernal_basic/</link>
+      <pubDate>Wed, 19 Sep 2018 23:13:46 +0800</pubDate>
+      
+      <guid>http://imet.me/post/2018/09-19_linux_kernal_basic/</guid>
+      <description>&lt;p&gt;关于linux内核&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;用户态和内核态，有啥区别 ？&lt;/li&gt;
+&lt;li&gt;虚拟地址空间怎么划分的 ？&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

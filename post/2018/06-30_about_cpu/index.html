@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>关于CPU的一些知识 - imet blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="imet" /><meta name="description" content="关于CPU的一些知识" />
+<meta name="keywords" content="CPU, Cache" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<link rel="canonical" href="http://imet.me/post/2018/06-30_about_cpu/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+
+
+<meta property="og:title" content="关于CPU的一些知识" />
+<meta property="og:description" content="关于CPU的一些知识" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://imet.me/post/2018/06-30_about_cpu/" />
+
+
+
+<meta property="article:published_time" content="2018-06-30T23:47:39&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-06-30T23:47:39&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="关于CPU的一些知识">
+<meta itemprop="description" content="关于CPU的一些知识">
+
+
+<meta itemprop="datePublished" content="2018-06-30T23:47:39&#43;08:00" />
+<meta itemprop="dateModified" content="2018-06-30T23:47:39&#43;08:00" />
+<meta itemprop="wordCount" content="726">
+
+
+
+<meta itemprop="keywords" content="计算机基础," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于CPU的一些知识"/>
+<meta name="twitter:description" content="关于CPU的一些知识"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">imet blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">imet blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">关于CPU的一些知识</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-06-30 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%97%A5%E5%B8%B8%E5%9F%BA%E7%A1%80/"> 日常基础 </a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#cpu-内存等硬件时间表格">CPU 内存等硬件时间表格</a></li>
+<li><a href="#mac-cpu-l1-l2">mac cpu，L1，L2</a></li>
+<li><a href="#相关问题">相关问题</a>
+<ul>
+<li><a href="#1-为什么-cpu-时钟频率不能再提高">1. 为什么 CPU 时钟频率不能再提高 ？</a></li>
+<li><a href="#2-l1-l2-l3-的结构">2. L1，L2，L3 的结构</a></li>
+<li><a href="#3-cpu-常说4核8线程是啥">3. CPU 常说4核8线程是啥？</a></li>
+<li><a href="#4-cpu-运算速度用什么来衡量">4. CPU 运算速度用什么来衡量？</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>关于 CPU 运行的有多快呢，CPU 执行一条命令需要多长时间，CPU，L1，L2，内存，硬盘时间上的差距呢</p>
+
+<p></p>
+
+<h2 id="cpu-内存等硬件时间表格">CPU 内存等硬件时间表格</h2>
+
+<table>
+<thead>
+<tr>
+<th>硬件</th>
+<th>时间（ns）</th>
+<th>转换时间</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>cpu</td>
+<td>0.38ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>L1</td>
+<td>0.5ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>分支预测错误</td>
+<td>5ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>L2</td>
+<td>7ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>互斥锁加锁</td>
+<td>25ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>内存寻址</td>
+<td>100ns</td>
+<td></td>
+</tr>
+
+<tr>
+<td>上下文切换</td>
+<td>1500ns</td>
+<td>1.5µs</td>
+</tr>
+
+<tr>
+<td>zippy压缩 1KB 数据</td>
+<td>3,000ns</td>
+<td>3µs</td>
+</tr>
+
+<tr>
+<td>1Gps网络发送 2KB 数据</td>
+<td>20,000ns</td>
+<td>20µs</td>
+</tr>
+
+<tr>
+<td>SSD 随机读</td>
+<td>150,000ns</td>
+<td>150µs</td>
+</tr>
+
+<tr>
+<td>从内存中读取 1MB 的连续数据</td>
+<td>250,000ns</td>
+<td>250us</td>
+</tr>
+
+<tr>
+<td>同一个数据中心跑一个来回</td>
+<td>500,000ns</td>
+<td>0.5ms</td>
+</tr>
+
+<tr>
+<td>从 SSD 读取 1MB 的顺序数据</td>
+<td>1,000,000ns</td>
+<td>1ms</td>
+</tr>
+
+<tr>
+<td>磁盘寻址时间为</td>
+<td>10,000,000ns</td>
+<td>10ms</td>
+</tr>
+
+<tr>
+<td>从世界上不同城市网络上走一个来回</td>
+<td>150,000,000ns</td>
+<td>150ms (参考ping报文)</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="mac-cpu-l1-l2">mac cpu，L1，L2</h2>
+
+<p>命令行查看 cpu 相关信息</p>
+
+<pre><code class="language-bash">$ sysctl -n machdep.cpu.brand_string
+Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz
+
+$ system_profiler SPHardwareDataType
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook Pro
+      Model Identifier: MacBookPro11,4
+      Processor Name: Intel Core i7
+      Processor Speed: 2.2 GHz
+      Number of Processors: 1
+      Total Number of Cores: 4
+      L2 Cache (per Core): 256 KB
+      L3 Cache: 6 MB
+      Memory: 16 GB
+      Boot ROM Version: MBP114.0183.B00
+      SMC Version (system): 2.29f24
+      Serial Number (system): xxxxxxxx
+      Hardware UUID: xxxxxxxxxxxx
+</code></pre>
+
+<h2 id="相关问题">相关问题</h2>
+
+<h3 id="1-为什么-cpu-时钟频率不能再提高">1. 为什么 CPU 时钟频率不能再提高 ？</h3>
+
+<p>可以参考<a href="https://www.quora.com/Why-havent-CPU-clock-speeds-increased-in-the-last-5-years">链接</a>和<a href="https://www.zhihu.com/question/32096371">知乎上的链接</a>，了解一下 CPU 为啥时钟频率不能再提高，总体来说是受到现在制成工艺的限制</p>
+
+<h3 id="2-l1-l2-l3-的结构">2. L1，L2，L3 的结构</h3>
+
+<p>顺便看一下 L1, L2, L3 的结构:
+<img src="http://p0.img.imet.top/op/20180630232448_cpu_cache.png" alt="cpu_cache" /></p>
+
+<p>可以参考<a href="http://wsfdl.com/linux/2016/06/11/%E7%90%86%E8%A7%A3CPU%E7%9A%84cache.html">链接</a>，了解缓存寻址时间</p>
+
+<h3 id="3-cpu-常说4核8线程是啥">3. CPU 常说4核8线程是啥？</h3>
+
+<p>Intel CPU 通过超线程，实现了一个 CPU 核心跑 2 个线程，来模拟 2 个 CPU 核心。
+- 物理核数量 = CPU 数(机子上装的 CPU 的数量) * 每个 CPU 的核心数
+- 上图也描述了一个 CPU core 里面 2个线程</p>
+
+<p>所以一般 4 核就是 8 CPU 线程来最大化 CPU 的利用率，可以参考<a href="https://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html">超线程</a>，<a href="https://en.wikipedia.org/wiki/Multithreading_%28computer_architecture%29">多线程</a>相关的介绍</p>
+
+<h3 id="4-cpu-运算速度用什么来衡量">4. CPU 运算速度用什么来衡量？</h3>
+
+<p>IPS: Instructions Per Second，每秒指令次数
+MIPS: Million Instructions Per Second，每秒百万指令次数</p>
+
+<p>MIPS 是衡量 CPU 运算速度的一个标准</p>
+
+<p>看来要补 cs 课程了</p>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><a href="http://cizixs.com/2017/01/03/how-slow-is-disk-and-network">让 CPU 告诉你硬盘和网络到底有多慢</a></li>
+<li><a href="https://www.akkadia.org/drepper/cpumemory.pdf">What Every Programmer Should Know About Memory</a></li>
+<li><a href="https://gist.github.com/hellerbarde/2843375">Latency numbers every programmer should know</a></li>
+<li><a href="https://people.eecs.berkeley.edu/~rcs/research/interactive_latency.html">Latency Numbers(by year) Every Programmer Should Know</a></li>
+<li><a href="https://manybutfinite.com/post/getting-physical-with-memory/">Getting Physical With Memory</a></li>
+<li><a href="http://blog.tsunanet.net/2010/11/how-long-does-it-take-to-make-context.html">how long does it take to make context</a></li>
+<li><a href="https://apple.stackexchange.com/questions/238777/how-do-i-identify-which-cpu-a-macbook-uses">How do I identify which CPU a MacBook uses?</a></li>
+<li><a href="https://ark.intel.com/products/83505/Intel-Core-i7-4770HQ-Processor-6M-Cache-up-to-3_40-GHz">i7-4770HQ</a></li>
+<li><a href="https://www.quora.com/Why-havent-CPU-clock-speeds-increased-in-the-last-5-years">Why haven&rsquo;t CPU clock speeds increased in the last 5 years?</a></li>
+<li><a href="http://wsfdl.com/linux/2016/06/11/%E7%90%86%E8%A7%A3CPU%E7%9A%84cache.html">理解 CPU Cache</a></li>
+<li><a href="https://www.zhihu.com/question/32096371">为什么 CPU 主频很难超过 4GHz？</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E6%AF%8F%E7%A7%92%E6%8C%87%E4%BB%A4">每秒指令</a></li>
+<li><a href="https://www.intel.com/content/www/us/en/architecture-and-technology/hyper-threading/hyper-threading-technology.html">Intel 超线程</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Multithreading_%28computer_architecture%29">Multithreading (computer architecture)</a></li>
+<li><a href="https://zh.wikipedia.org/zh-cn/%E8%B6%85%E5%9F%B7%E8%A1%8C%E7%B7%92">超线程</a></li>
+<li><a href="http://www.cnblogs.com/-new/p/7234332.html">认识cpu、核与线程</a></li>
+</ol>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">imet</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-06-30</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/07-01_sdkman/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">sdkman: groovy, scala, kotlin 等包管理软件</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/06-26-about_time/">
+            <span class="next-text nav-default">关于秒相关的时间</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/imet" class="iconfont icon-github" title="github"></a>
+  <a href="http://imet.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">imet</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

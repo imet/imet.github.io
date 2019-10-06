@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java框架 on imet blog</title>
+    <link>http://imet.me/categories/java%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in Java框架 on imet blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 18 Jul 2018 11:48:09 +0800</lastBuildDate>
+    
+	<atom:link href="http://imet.me/categories/java%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>log4j2 高性能</title>
+      <link>http://imet.me/post/2018/07-18_log4j2_high_performance/</link>
+      <pubDate>Wed, 18 Jul 2018 11:48:09 +0800</pubDate>
+      
+      <guid>http://imet.me/post/2018/07-18_log4j2_high_performance/</guid>
+      <description>&lt;h2 id=&#34;开篇词&#34;&gt;开篇词&lt;/h2&gt;
+
+&lt;p&gt;log4j2 日志性能在某些场景下要优于 logback 等其他日志组件，带来了非常大的性能提升，究竟有多大呢？&lt;/p&gt;
+
+&lt;p&gt;这几个新的特性如下:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://logging.apache.org/log4j/2.x/manual/async.html&#34; title=&#34;Asynchronous Loggers for Low-Latency Logging&#34;&gt;Asynchronous Loggers&lt;/a&gt; based on the [LMAX Disruptor library]&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://logging.apache.org/log4j/2.x/manual/garbagefree.html&#34; title=&#34;garbagefree&#34;&gt;Garbage-free&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Plugin system, 方便添加 appenders, filters, layouts, lookups 等&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>java日志框架</title>
+      <link>http://imet.me/post/2018/07-17_java_log_framework/</link>
+      <pubDate>Tue, 17 Jul 2018 16:47:00 +0800</pubDate>
+      
+      <guid>http://imet.me/post/2018/07-17_java_log_framework/</guid>
+      <description>&lt;p&gt;日志组件这么多，log4j, log4j2, slf4j 等傻傻分不清楚，如何选择相关的日志组件 ？&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

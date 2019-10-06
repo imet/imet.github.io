@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>日常基础 on imet blog</title>
+    <link>http://imet.me/categories/%E6%97%A5%E5%B8%B8%E5%9F%BA%E7%A1%80/</link>
+    <description>Recent content in 日常基础 on imet blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sat, 30 Jun 2018 23:47:39 +0800</lastBuildDate>
+    
+	<atom:link href="http://imet.me/categories/%E6%97%A5%E5%B8%B8%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于CPU的一些知识</title>
+      <link>http://imet.me/post/2018/06-30_about_cpu/</link>
+      <pubDate>Sat, 30 Jun 2018 23:47:39 +0800</pubDate>
+      
+      <guid>http://imet.me/post/2018/06-30_about_cpu/</guid>
+      <description>&lt;p&gt;关于 CPU 运行的有多快呢，CPU 执行一条命令需要多长时间，CPU，L1，L2，内存，硬盘时间上的差距呢&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>关于秒相关的时间</title>
+      <link>http://imet.me/post/2018/06-26-about_time/</link>
+      <pubDate>Tue, 26 Jun 2018 21:26:15 +0800</pubDate>
+      
+      <guid>http://imet.me/post/2018/06-26-about_time/</guid>
+      <description>&lt;p&gt;关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>关于秒相关的时间 - imet blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="imet" />
+  <meta name="description" content="关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。
+
+" />
+<meta name="keywords" content="秒时间" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<link rel="canonical" href="http://imet.me/post/2018/06-26-about_time/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+
+
+<meta property="og:title" content="关于秒相关的时间" />
+<meta property="og:description" content="关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://imet.me/post/2018/06-26-about_time/" />
+
+
+
+<meta property="article:published_time" content="2018-06-26T21:26:15&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-06-26T21:26:15&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="关于秒相关的时间">
+<meta itemprop="description" content="关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。
+
+">
+
+
+<meta itemprop="datePublished" content="2018-06-26T21:26:15&#43;08:00" />
+<meta itemprop="dateModified" content="2018-06-26T21:26:15&#43;08:00" />
+<meta itemprop="wordCount" content="345">
+
+
+
+<meta itemprop="keywords" content="计算机基础," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="关于秒相关的时间"/>
+<meta name="twitter:description" content="关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">imet blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">imet blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">关于秒相关的时间</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-06-26 </span>
+        <div class="post-category">
+            
+              <a href="/categories/%E6%97%A5%E5%B8%B8%E5%9F%BA%E7%A1%80/"> 日常基础 </a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#秒时间表格">秒时间表格</a></li>
+<li><a href="#关于时间的思考">关于时间的思考</a></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <p>关于比秒更小的时间单位，CPU 时钟周期用什么度量，佛曰“一刹那”是多长时间呢。</p>
+
+<p></p>
+
+<h2 id="秒时间表格">秒时间表格</h2>
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>英文</th>
+<th>大小</th>
+<th>频率</th>
+<th>备注</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>秒</td>
+<td>second (s)</td>
+<td>1</td>
+<td>1Hz</td>
+<td></td>
+</tr>
+
+<tr>
+<td>毫秒</td>
+<td>millisecond (ms)</td>
+<td>$10^{-3}$</td>
+<td>1KHz</td>
+<td></td>
+</tr>
+
+<tr>
+<td>微秒</td>
+<td>microsecond (µs)</td>
+<td>$10^{-6}$</td>
+<td>1MHz</td>
+<td></td>
+</tr>
+
+<tr>
+<td>纳秒</td>
+<td>nanosecond (ns)</td>
+<td>$10^{-9}$</td>
+<td>1GHz</td>
+<td>CPU 时钟周期</td>
+</tr>
+
+<tr>
+<td>皮秒</td>
+<td>picosecond (ps)</td>
+<td>$10^{-12}$</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>飞秒</td>
+<td>femtosecond (fs)</td>
+<td>$10^{-15}$</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>阿秒</td>
+<td>attosecond (as)</td>
+<td>$10^{-18}$</td>
+<td></td>
+<td>目前实验上能测量的最小时间尺度</td>
+</tr>
+
+<tr>
+<td>仄普托秒</td>
+<td>zeptosecond (zs)</td>
+<td>$10^{-21}$</td>
+<td></td>
+<td>放射性原子核衰变中γ射线辐射的典型周期时间</td>
+</tr>
+
+<tr>
+<td>遥刻托秒</td>
+<td>yoctosecond (ys)</td>
+<td>$10^{-24}$</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>planktime</td>
+<td>plank time (tP)</td>
+<td>$10^{-44}$</td>
+<td></td>
+<td>普朗克時間</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="关于时间的思考">关于时间的思考</h2>
+
+<ol>
+<li>阿秒: 目前实验上能测量的最小时间尺度</li>
+<li>飞秒: 可见光的周期</li>
+<li>纳秒: CPU 时钟周期，主要是对 CPU 2.xGHz 感兴趣，才查了一下时间的最小单位，所以 CPU 脉冲电压是 0.3~0.4ns 纳秒左右</li>
+<li>印度《摩訶僧祇律》记载：“須臾者。二十念名一瞬頃。二十瞬名一彈指。二十彈指名一羅豫。二十羅豫名一須臾。日極長時有十八須臾，夜極短時有十二須臾。夜極長時有十八須臾，日極短時有十二須臾”:
+一刹那大概是 18 毫秒</li>
+</ol>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li><code>https://en.wikipedia.org/wiki/Orders_of_magnitude_(time)</code></li>
+<li><code>https://zh.wikipedia.org/wiki/%E6%95%B0%E9%87%8F%E7%BA%A7_(%E6%97%B6%E9%97%B4)</code></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%88%B9%E9%82%A3">https://zh.wikipedia.org/wiki/%E5%88%B9%E9%82%A3</a></li>
+</ol>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">imet</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-06-26</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/06-30_about_cpu/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">关于CPU的一些知识</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/06-24-hello-hugo/">
+            <span class="next-text nav-default">Hello Hugo</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/imet" class="iconfont icon-github" title="github"></a>
+  <a href="http://imet.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">imet</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

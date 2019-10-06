@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>log4j2 高性能 - imet blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="imet" /><meta name="description" content="log4j2 日志框架调优及高性能" />
+<meta name="keywords" content="log4j, log4j2, slf4j" />
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<link rel="canonical" href="http://imet.me/post/2018/07-18_log4j2_high_performance/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.1.1" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+
+
+<meta property="og:title" content="log4j2 高性能" />
+<meta property="og:description" content="log4j2 日志框架调优及高性能" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://imet.me/post/2018/07-18_log4j2_high_performance/" />
+
+
+
+<meta property="article:published_time" content="2018-07-18T11:48:09&#43;08:00"/>
+
+<meta property="article:modified_time" content="2018-07-18T11:48:09&#43;08:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="log4j2 高性能">
+<meta itemprop="description" content="log4j2 日志框架调优及高性能">
+
+
+<meta itemprop="datePublished" content="2018-07-18T11:48:09&#43;08:00" />
+<meta itemprop="dateModified" content="2018-07-18T11:48:09&#43;08:00" />
+<meta itemprop="wordCount" content="878">
+
+
+
+<meta itemprop="keywords" content="log4j,slf4j,log4j2," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="log4j2 高性能"/>
+<meta name="twitter:description" content="log4j2 日志框架调优及高性能"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">imet blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">imet blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">log4j2 高性能</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-07-18 </span>
+        <div class="post-category">
+            
+              <a href="/categories/java%E6%A1%86%E6%9E%B6/"> java框架 </a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#开篇词">开篇词</a></li>
+<li><a href="#高性能的几个表现对比-high-performance">高性能的几个表现对比 (High performance)</a>
+<ul>
+<li><a href="#1-日志组件之间的对比">1. 日志组件之间的对比</a></li>
+<li><a href="#2-异步日志场景下是否记录调用栈">2. 异步日志场景下是否记录调用栈</a></li>
+<li><a href="#3-同步场景下-garbage-free">3. 同步场景下 garbage free</a></li>
+</ul></li>
+<li><a href="#log4j2-相关的配置">log4j2 相关的配置</a>
+<ul>
+<li><a href="#maven-pom-相关的配置">maven pom 相关的配置</a></li>
+<li><a href="#log4j2-日志相关的配置">log4j2 日志相关的配置</a></li>
+</ul></li>
+<li><a href="#参考">参考</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      <h2 id="开篇词">开篇词</h2>
+
+<p>log4j2 日志性能在某些场景下要优于 logback 等其他日志组件，带来了非常大的性能提升，究竟有多大呢？</p>
+
+<p>这几个新的特性如下:</p>
+
+<ul>
+<li><a href="http://logging.apache.org/log4j/2.x/manual/async.html" title="Asynchronous Loggers for Low-Latency Logging">Asynchronous Loggers</a> based on the [LMAX Disruptor library]</li>
+<li><a href="http://logging.apache.org/log4j/2.x/manual/garbagefree.html" title="garbagefree">Garbage-free</a></li>
+<li>Plugin system, 方便添加 appenders, filters, layouts, lookups 等</li>
+</ul>
+
+<p></p>
+
+<h2 id="高性能的几个表现对比-high-performance">高性能的几个表现对比 (High performance)</h2>
+
+<h3 id="1-日志组件之间的对比">1. 日志组件之间的对比</h3>
+
+<p><strong>结论：log4j2 all async 胜出，异步是同步的6-10倍</strong></p>
+
+<p>主要得益于:</p>
+
+<ul>
+<li><a href="https://lmax-exchange.github.io/disruptor/" title="lock-free data structure by disruptor">lock-free data structure</a></li>
+</ul>
+
+<p><img src="http://p0.img.imet.top/op/20180718145851_log_lib_compare.png" alt="Logging Library Performance Comparison" /></p>
+
+<p>(refer: <a href="https://logging.apache.org/log4j/2.x/performance.html" title="log4j2 performance">log4j2 performance</a>)</p>
+
+<h3 id="2-异步日志场景下是否记录调用栈">2. 异步日志场景下是否记录调用栈</h3>
+
+<p><strong>结论：不记录相关的 class, line num 这些信息的话，性能有 30~100 的提升</strong></p>
+
+<p>如果日志 pattern 中打印以下信息的话:  %C or $class, %F or %file, %l or %location, %L or %line, %M or %method
+将会极大的影响日志的性能，日志组件需要打印当前栈的快照，遍历 stack trace 然后找到 location 等相关信息</p>
+
+<p><img src="http://p0.img.imet.top/op/20180718151032_performance_impact_of_catpuring_caller_location.png" alt="Asynchronous Logging with Caller Location Information" /></p>
+
+<p>(refer: <a href="https://logging.apache.org/log4j/2.x/performance.html" title="log4j2 performance">log4j2 performance</a>)</p>
+
+<h3 id="3-同步场景下-garbage-free">3. 同步场景下 garbage free</h3>
+
+<p>大部分情况下 garbage free 的性能要优</p>
+
+<p><img src="http://p0.img.imet.top/op/20180718173203_sync_logging_compare.png" alt="sync log compare" /></p>
+
+<p>(refer: <a href="https://logging.apache.org/log4j/2.x/performance.html" title="log4j2 performance">log4j2 performance</a>, <a href="http://logging.apache.org/log4j/2.x/manual/garbagefree.html" title="garbagefree">garbagefree</a>)</p>
+
+<h2 id="log4j2-相关的配置">log4j2 相关的配置</h2>
+
+<h3 id="maven-pom-相关的配置">maven pom 相关的配置</h3>
+
+<p>.pom.xml</p>
+
+<pre><code class="language-xml">  &lt;dependencies&gt;
+    &lt;!-- 日志门面 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+        &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 作为 slf4j 的实现 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-slf4j-impl&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 核心 jar --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-api&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- log4j2 核心 jar --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-core&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- 将老版本的 log4j 1.2 升级到 log4j2  --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j-1.2-api&lt;/artifactId&gt;
+        &lt;version&gt;2.10.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!--&amp;lt;!&amp;ndash; log4j2 jul 的实现  &amp;ndash;&amp;gt;--&gt;
+    &lt;!--&lt;dependency&gt;--&gt;
+        &lt;!--&lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;--&gt;
+        &lt;!--&lt;artifactId&gt;log4j-jul&lt;/artifactId&gt;--&gt;
+        &lt;!--&lt;version&gt;2.10.0&lt;/version&gt;--&gt;
+    &lt;!--&lt;/dependency&gt;--&gt;
+
+    &lt;!-- 使用log4j2的AsyncLogger需要包含disruptor --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.lmax&lt;/groupId&gt;
+        &lt;artifactId&gt;disruptor&lt;/artifactId&gt;
+        &lt;version&gt;3.3.7&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- 需要再把其他依赖里面的 slf4j implement 给排除掉，已经依赖的实现日志包 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;xxx&lt;/groupId&gt;
+      &lt;artifactId&gt;xxx-yy&lt;/artifactId&gt;
+      &lt;version&gt;zz&lt;/version&gt;
+      &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;/exclusion&gt;
+        &lt;exclusion&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;/exclusion&gt;
+      &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+
+  &lt;/dependencies&gt;
+</code></pre>
+
+<h3 id="log4j2-日志相关的配置">log4j2 日志相关的配置</h3>
+
+<p>.log4j2.xml</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;Configuration status=&quot;WARN&quot;&gt;
+    &lt;Properties&gt;
+        &lt;Property name=&quot;LOG_HOME&quot;&gt;./logs&lt;/Property&gt;
+    &lt;/Properties&gt;
+    &lt;Appenders&gt;
+        &lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;
+            &lt;PatternLayout pattern=&quot;%level [%date{HH:mm:ss.SSS}][%thread][%class][%line]:%message%n&quot;/&gt;
+        &lt;/Console&gt;
+
+        &lt;RollingRandomAccessFile name=&quot;infoLog&quot; fileName=&quot;${LOG_HOME}/info.log&quot;
+                                 filePattern=&quot;${LOG_HOME}/info.%d{yyyy-MM-dd}.log.gz&quot; immediateFlush=&quot;false&quot; append=&quot;true&quot;&gt;
+            &lt;PatternLayout pattern=&quot;[%X][%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%level]:%message%n&quot;/&gt;
+            &lt;Filters&gt;
+                &lt;ThresholdFilter level=&quot;error&quot; onMatch=&quot;DENY&quot; onMismatch=&quot;NEUTRAL&quot;/&gt;
+                &lt;ThresholdFilter level=&quot;warn&quot; onMatch=&quot;DENY&quot; onMismatch=&quot;NEUTRAL&quot;/&gt;
+                &lt;ThresholdFilter level=&quot;info&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+                &lt;ThresholdFilter level=&quot;debug&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+            &lt;/Filters&gt;
+            &lt;Policies&gt;
+                &lt;TimeBasedTriggeringPolicy interval=&quot;1&quot; modulate=&quot;true&quot;/&gt;
+            &lt;/Policies&gt;
+        &lt;/RollingRandomAccessFile&gt;
+        &lt;RollingRandomAccessFile name=&quot;warnLog&quot; fileName=&quot;${LOG_HOME}/warn.log&quot;
+                                 filePattern=&quot;${LOG_HOME}/warn.%d{yyyy-MM-dd}.log.gz&quot; immediateFlush=&quot;false&quot; append=&quot;true&quot;&gt;
+            &lt;Filters&gt;
+                &lt;ThresholdFilter level=&quot;error&quot; onMatch=&quot;DENY&quot; onMismatch=&quot;NEUTRAL&quot;/&gt;
+                &lt;ThresholdFilter level=&quot;warn&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+            &lt;/Filters&gt;
+            &lt;PatternLayout pattern=&quot;[%X][%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%level][%class][%line]:%message%n&quot;/&gt;
+            &lt;Policies&gt;
+                &lt;TimeBasedTriggeringPolicy interval=&quot;1&quot; modulate=&quot;true&quot;/&gt;
+            &lt;/Policies&gt;
+        &lt;/RollingRandomAccessFile&gt;
+        &lt;RollingRandomAccessFile name=&quot;errorLog&quot; fileName=&quot;${LOG_HOME}/error.log&quot;
+                                 filePattern=&quot;${LOG_HOME}/error.%d{yyyy-MM-dd}.log.gz&quot; immediateFlush=&quot;false&quot; append=&quot;true&quot;&gt;
+            &lt;Filters&gt;
+                &lt;ThresholdFilter level=&quot;ERROR&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;
+            &lt;/Filters&gt;
+            &lt;PatternLayout pattern=&quot;[%X][%date{yyyy-MM-dd HH:mm:ss.SSS}][%thread][%level][%class][%line]:%message%n&quot;/&gt;
+            &lt;Policies&gt;
+                &lt;TimeBasedTriggeringPolicy interval=&quot;1&quot; modulate=&quot;true&quot;/&gt;
+            &lt;/Policies&gt;
+        &lt;/RollingRandomAccessFile&gt;
+
+    &lt;/Appenders&gt;
+
+    &lt;Loggers&gt;
+
+        &lt;!-- 指定相关的 logger name 的日志级别 --&gt;
+        &lt;logger name=&quot;org.springframework&quot; level=&quot;info&quot; additivity=&quot;false&quot;&gt;
+            &lt;appender-ref ref=&quot;infoLog&quot;/&gt;
+            &lt;appender-ref ref=&quot;warnLog&quot;/&gt;
+            &lt;appender-ref ref=&quot;errorLog&quot;/&gt;
+        &lt;/logger&gt;
+
+        &lt;!-- 剩余其他的日志级别 --&gt;
+        &lt;Root level=&quot;warn&quot; includeLocation=&quot;true&quot;&gt;
+            &lt;appender-ref ref=&quot;infoLog&quot;/&gt;
+            &lt;appender-ref ref=&quot;warnLog&quot;/&gt;
+            &lt;appender-ref ref=&quot;errorLog&quot;/&gt;
+        &lt;/Root&gt;
+
+    &lt;/Loggers&gt;
+
+&lt;/Configuration&gt;
+
+</code></pre>
+
+<p>.log4j2.component.properties</p>
+
+<pre><code class="language-bash"># 设置全异步的打日志方式， 就不需要在命令行加 -Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector 参数了
+log4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+# size = 1024 * 1024
+log4j2.asyncLoggerRingBufferSize=1048576
+# discard not to block the queue
+log4j2.asyncQueueFullPolicy=Discard
+# 默认是在 INFO 级别去 discard
+log4j2.discardThreshold=INFO
+</code></pre>
+
+<h2 id="参考">参考</h2>
+
+<ol>
+<li>csdn blog: <a href="https://blog.csdn.net/yycdaizi/article/details/8276265" title="java日志组件介绍（common-logging，log4j，slf4j，logback ）">java日志组件介绍（common-logging，log4j，slf4j，logback ）</a></li>
+<li>简书: <a href="https://www.jianshu.com/p/85d141365d39" title="该让log4j退休了 - 论Java日志组件的选择 - on 简书">该让log4j退休了 - 论Java日志组件的选择</a></li>
+<li>网易lede: <a href="http://tech.lede.com/2017/02/06/rd/server/log4jSearch/" title="日志工具现状调研">日志工具现状调研</a></li>
+<li>网易lede: <a href="http://tech.lede.com/2017/08/28/rd/server/Log4j2Update/" title="Log4j 2.x 日志升级的详细流程（针对各种混合使用Log4j 1.x，Logback，JCL,JUL等）">Log4j 2.x 日志升级的详细流程（针对各种混合使用Log4j 1.x，Logback，JCL,JUL等）</a></li>
+<li>log4j2 runtime-dependencies: <a href="http://logging.apache.org/log4j/2.x/runtime-dependencies.html" title="log4j2 相关 jar 及依赖关系">log4j2 相关 jar 及依赖关系</a></li>
+<li>log4j2 async: <a href="http://logging.apache.org/log4j/2.x/manual/async.html" title="Asynchronous Loggers for Low-Latency Logging">Asynchronous Loggers</a></li>
+<li>log4j2 performance: <a href="https://logging.apache.org/log4j/2.x/performance.html" title="log4j2 performance">log4j2 performance</a></li>
+<li>log4j2 garbagefree: <a href="http://logging.apache.org/log4j/2.x/manual/garbagefree.html" title="garbagefree">garbagefree</a></li>
+<li>lock-free by disruptor: <a href="https://lmax-exchange.github.io/disruptor/" title="lock-free data structure by disruptor">lock-free data structure</a></li>
+<li>log4j 配置文件: <a href="https://logging.apache.org/log4j/2.x/manual/configuration.htm" title="log4j2 configuration">log4j2 configuration</a></li>
+<li><a href="https://www.jianshu.com/p/82469047acbf" title="log4j2异步注意事项">log4j2异步注意事项</a></li>
+<li><a href="https://my.oschina.net/13426421702/blog/904249" title="log4j2性能剖析">log4j2性能剖析</a></li>
+<li><a href="https://blog.csdn.net/heyutao007/article/details/72773077" title="log4j2异步Logger">log4j2异步Logger</a></li>
+</ol>
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">imet</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-07-18</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          
+          <a href="/tags/log4j/">log4j</a>
+          
+          <a href="/tags/slf4j/">slf4j</a>
+          
+          <a href="/tags/log4j2/">log4j2</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/2018/09-19_linux_kernal_basic/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">linux 内核基础</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+          <a class="next" href="/post/2018/07-17_java_log_framework/">
+            <span class="next-text nav-default">java日志框架</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/imet" class="iconfont icon-github" title="github"></a>
+  <a href="http://imet.me/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2018 - 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">imet</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.1.1"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
